@@ -2,6 +2,11 @@
 /** @type {import('webpack').Configuration} */
 module.exports = {
   devtool: "source-map",  // または 'inline-source-map' など
+  devServer: {
+    static: {
+      directory: "./dist",
+    },
+  },
   module: {
     rules: [
       {
