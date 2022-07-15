@@ -17,9 +17,22 @@ module.exports = {
       {
         // 拡張子 js または jsx のファイル（正規表現）
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
         // ローダーの指定
         loader: "babel-loader",
+      },
+      {
+        // 拡張子 css のファイル（正規表現）
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              // dev モードではソースマップを付ける
+              sourceMap: isDev,
+            },
+          },
+        ],
       }
     ]
   },
