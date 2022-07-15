@@ -5,12 +5,18 @@ const isDev = process.env.NODE_ENV === "development";
 /** @type {import('webpack').Configuration} */
 module.exports = {
   mode: isDev ? "development" : "production",
-  entry: './src/index.jsx',
-  devtool: isDev ? "source-map" : undefined,  // または 'inline-source-map' など
+  entry: "./src/index.jsx",
+  output: {
+    filename: "[name].js",
+    path: path.resolve(__dirname, "dist"),
+    // "dist/asset/名前.拡張子" として出力される
+    assetModuleFilename: "asset/[name][ext]",
+  },
+  devtool: isDev ? "source-map" : undefined, // または 'inline-source-map' など
   devServer: {
     static: {
-      directory: "./dist"
-    }
+      directory: "./dist",
+    },
   },
   module: {
     rules: [
@@ -39,11 +45,23 @@ module.exports = {
             },
           },
         ],
-      }
-    ]
+      },
+      {
+        // 画像やフォントファイル
+        test: /\.(ico|png|svg|ttf|otf|eot|woff?2?)$/,
+        // type は自動モード
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            // 2kb 以上なら `asset/resource` する
+            maxSize: 1024 * 2,
+          },
+        },
+      },
+    ],
   },
   // 依存関係解決に参照するファイルの拡張子を指定
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: [".js", ".jsx"],
   },
 };
