@@ -21,14 +21,20 @@ module.exports = {
         loader: "babel-loader",
       },
       {
-        // 拡張子 css のファイル（正規表現）
-        test: /\.css$/,
+        // 拡張子 scss または css のファイル
+        test: /\.s?css$/,
         use: [
           "style-loader",
           {
             loader: "css-loader",
             options: {
               // dev モードではソースマップを付ける
+              sourceMap: isDev,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
               sourceMap: isDev,
             },
           },
