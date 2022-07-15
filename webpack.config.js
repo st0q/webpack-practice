@@ -1,8 +1,12 @@
+// development モードか否か？
+const isDev = process.env.NODE_ENV === "development";
+
 /** ↓ エディタで補完を効かせるための JSDoc */
 /** @type {import('webpack').Configuration} */
 module.exports = {
+  mode: isDev ? "development" : "production",
   entry: './src/index.jsx',
-  devtool: "source-map",  // または 'inline-source-map' など
+  devtool: isDev ? "source-map" : undefined,  // または 'inline-source-map' など
   devServer: {
     static: {
       directory: "./dist"
