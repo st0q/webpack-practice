@@ -2,6 +2,7 @@
 const path = require("path");
 // プラグインの読み込み
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // development モードか否か？
 const isDev = process.env.NODE_ENV === "development";
@@ -12,6 +13,7 @@ module.exports = {
   // "plugins" エントリーを追加
   plugins: [
     // プラグインのインスタンスを作成
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       // テンプレート
       template: "./src/index.html",
@@ -49,7 +51,7 @@ module.exports = {
         // 拡張子 scss または css のファイル
         test: /\.s?css$/,
         use: [
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
