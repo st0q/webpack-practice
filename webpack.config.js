@@ -1,9 +1,28 @@
+// Node.js の path モジュールをインポート
+const path = require("path");
+// プラグインの読み込み
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 // development モードか否か？
 const isDev = process.env.NODE_ENV === "development";
 
 /** ↓ エディタで補完を効かせるための JSDoc */
 /** @type {import('webpack').Configuration} */
 module.exports = {
+  // "plugins" エントリーを追加
+  plugins: [
+    // プラグインのインスタンスを作成
+    new HtmlWebpackPlugin({
+      // テンプレート
+      template: "./src/index.html",
+      // <script> ~ </script> タグの挿入位置
+      inject: "body",
+      // スクリプト読み込みのタイプ
+      scriptLoading: "defer",
+      // ファビコンも <link rel="shortcut icon" ~ /> として挿入できる
+      // favicon: "./src/favicon.ico",
+    }),
+  ],
   mode: isDev ? "development" : "production",
   entry: "./src/index.jsx",
   output: {
