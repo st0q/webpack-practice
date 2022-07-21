@@ -26,7 +26,10 @@ module.exports = {
     }),
   ],
   mode: isDev ? "development" : "production",
-  entry: "./src/index.jsx",
+  entry: {
+    // "tsx" へ変更
+    main: "./src/index.tsx",
+  },
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
@@ -42,10 +45,8 @@ module.exports = {
   module: {
     rules: [
       {
-        // 拡張子 js または jsx のファイル（正規表現）
-        test: /\.(js|jsx)$/,
-        // ローダーの指定
-        loader: "babel-loader",
+        test: /\.tsx?$/,
+        loader: "ts-loader",
       },
       {
         // 拡張子 scss または css のファイル
@@ -83,6 +84,6 @@ module.exports = {
   },
   // 依存関係解決に参照するファイルの拡張子を指定
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
 };
